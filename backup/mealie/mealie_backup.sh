@@ -8,17 +8,13 @@ if [ ! -f .env ]; then
 fi
 source .env
 
-# Prepare backup directory
-BACKUP_DIR="$BACKUP_TMP_DIR/mealie-backup-$(date +%Y-%m-%d)"
-mkdir -p "$BACKUP_DIR"
-
 echo "Stopping Mealie container..."
-docker stop "$CONTAINER_MEALIE"
+docker stop "$CONTAINER_NAME"
 
 echo "Backing up Mealie data..."
-cp "$MEALIE_DATA_PATH" "$BACKUP_DIR/"
+cp "$DATA_PATH" "$BACKUP_TARGET_DIR/"
 
 echo "Restarting Mealie container..."
-docker start "$CONTAINER_MEALIE"
+docker start "$CONTAINER_NAME"
 
-echo "Mealie backup complete. Files saved to $BACKUP_DIR"
+echo "Mealie backup complete. Files saved to $BACKUP_TARGET_DIR"

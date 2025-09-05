@@ -2,11 +2,11 @@
 set -euo pipefail
 
 # Load general backup env
-if [ ! -f .env.backup ]; then
-    echo ".env.backup not found!"
+if [ ! -f .env ]; then
+    echo ".env not found!"
     exit 1
 fi
-source .env.backup
+source .env
 
 DATE_STR=$(date +%Y-%m-%d)
 
