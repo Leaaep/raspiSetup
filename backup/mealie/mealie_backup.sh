@@ -2,11 +2,11 @@
 set -euo pipefail
 
 # Load Mealie env
-if [ ! -f .env.mealie ]; then
-    echo ".env.mealie not found!"
+if [ ! -f .env ]; then
+    echo ".env not found!"
     exit 1
 fi
-source .env.mealie
+source .env
 
 # Prepare backup directory
 BACKUP_DIR="$BACKUP_TMP_DIR/mealie-backup-$(date +%Y-%m-%d)"
@@ -16,7 +16,7 @@ echo "Stopping Mealie container..."
 docker stop "$CONTAINER_MEALIE"
 
 echo "Backing up Mealie data..."
-docker cp "$CONTAINER_MEALIE:$MEALIE_DATA_PATH" "$BACKUP_DIR/"
+cp "$MEALIE_DATA_PATH" "$BACKUP_DIR/"
 
 echo "Restarting Mealie container..."
 docker start "$CONTAINER_MEALIE"
