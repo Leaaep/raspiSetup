@@ -8,22 +8,17 @@ if [ ! -f .env ]; then
 fi
 source .env
 
-# Prepare backup directory
-BACKUP_DIR="$BACKUP_TMP_DIR/forgejo-backup-$(date +%Y-%m-%d)"
-mkdir -p "$BACKUP_DIR"
-
 echo "Running Forgejo dump..."
-DUMP_FILE="dump-$(date +%Y-%m-%d).tar"
-docker exec "$CONTAINER_FORGEJO" forgejo dump "$FORGEJO_DUMP_PATH/$DUMP_FILE"
-docker cp "$CONTAINER_FORGEJO:$FORGEJO_DUMP_PATH/$DUMP_FILE" "$BACKUP_DIR/forgejo-dump.tar"
+FILE_NAME="forgejo-dump-$(date +%Y-%m-%d).zip"
+docker exec --user 1000:1000 -w /data/gitea/tmp "$CONTAINER_FORGEJO" forgejo dump --file "$FILE_NAME"
 
 echo "Stopping Forgejo container..."
 docker stop "$CONTAINER_FORGEJO"
 
 echo "Copying SQLite database..."
-cp "$LOCAL_SQLITE_PATH" "$BACKUP_DIR/forgejo.sqlite"
+cp "$LOCAL_SQLITE_PATH/$FILE_NAME" "$BACKUP_TMP_DIR/"
 
 echo "Restarting Forgejo container..."
 docker start "$CONTAINER_FORGEJO"
 
-echo "Forgejo backup complete. Files saved to $BACKUP_DIR"
+echo "Forgejo backup complete. Files saved to $BACKUP_TMP_DIR/$FILE_NAME"
