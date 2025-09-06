@@ -30,7 +30,7 @@ rm -rf "$RESTORE_TARGET_PATH"
 
 echo "Loading backup data..."
 BACKUP_FILE=$(ls "$RESTORE_SRC_PATH/${app_name}-dump-"*.zip | sort | tail -n1)
-unzip -o "$BACKUP_FILE" -d "$RESTORE_TARGET_PATH/"
+unzip -o "$BACKUP_FILE" -d "$RESTORE_TARGET_PATH"
 
 echo "Restarting $app_name container..."
 docker start "$CONTAINER_NAME"

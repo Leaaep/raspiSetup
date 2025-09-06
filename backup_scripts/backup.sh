@@ -26,7 +26,10 @@ echo "Stopping $app_name container..."
 docker stop "$CONTAINER_NAME"
 
 echo "Backing up $app_name data..."
-zip -r "$BACKUP_TARGET_DIR/$FILE_NAME" "$BACKUP_SRC_DIR"
+(
+    cd "$BACKUP_SRC_DIR" || { echo "Cannot cd to $BACKUP_SRC_DIR"; exit 1; }
+    zip -r "$BACKUP_TARGET_DIR/$FILE_NAME" .
+)
 
 echo "Restarting $app_name container..."
 docker start "$CONTAINER_NAME"
