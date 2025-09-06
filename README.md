@@ -112,23 +112,5 @@ sudo systemctl reload caddy
 
 [source](https://caddyserver.com/docs/running)
 
-## Rsync
-
-Use SSH keys to connect to backup device
-```shell
-ssh-keygen -t ed25519
-```
-
-With Rsync we are able to backup our files with a simple copy command.
-
-```shell
-rsync -av /path/to/backup/ username@ipaddr:/path/on/synology/backup-$(date +%Y-%m-%d)/ > /path/to/backup.log
-```
-
-To delete folders that are older then 13 days (2 weeks) we can use the following bash command:
-
-```shell
-ssh username@ipaddr 'find /path/on/backup_device/ -maxdepth 1 -type d -name "backup-*" -mtime +13 -exec rm -rf {} \;' > /path/to/backup-delete.log 2>&1
-```
-
-Both of these commands write logfiles to a custom path. These logfiles are replaced every load.
+## Backup
+I wrote multiple backup scripts for different containers in my setup. To use them you just need to rename: `.env.something->` `.env`
