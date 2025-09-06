@@ -8,15 +8,19 @@ if [ ! -f .env.mealie ]; then
 fi
 source .env.mealie
 
-echo "Unzipping forgejo dump zip"
+echo "Unzipping Mealie dump zip"
 unzip "$RESTORE_SRC_PATH/forgejo-dump-*.zip"
 
-echo "Stopping forgejo container..."
+echo "Stopping Mealie container..."
 docker stop "$CONTAINER_NAME"
 
+echo "Deleting old data..."
+rm -rf "$RESTORE_TARGET_PATH/mealie_data"
+
+echo "Loading backup data..."
 cp -rf "$RESTORE_SRC_PATH/mealie_data" "$RESTORE_TARGET_PATH"
 
-echo "Starting forgejo container"
+echo "Restarting Mealie container..."
 docker start "$CONTAINER_NAME"
 
-echo "Restore complete"
+echo "Restore completed :)"

@@ -20,4 +20,4 @@ cp -r "$BACKUP_SRC_DIR" "$BACKUP_TARGET_DIR/" && zip -r $FILE_NAME "$BACKUP_TARG
 echo "Restarting Mealie container..."
 docker start "$CONTAINER_NAME"
 
-echo "Mealie backup complete. Files saved to $BACKUP_TARGET_DIR"
+echo "Mealie backup complete. Files saved to $BACKUP_TARGET_DIR/$FILE_NAME"

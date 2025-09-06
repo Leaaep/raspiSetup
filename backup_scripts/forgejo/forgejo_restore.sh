@@ -8,10 +8,10 @@ if [ ! -f .env.forgejo ]; then
 fi
 source .env.forgejo
 
-echo "Unzipping forgejo dump zip"
+echo "Unzipping dump zip..."
 unzip "$RESTORE_SRC_PATH/forgejo-dump-*.zip"
 
-echo "Stopping forgejo container..."
+echo "Stopping Forgejo container..."
 docker stop "$CONTAINER_NAME"
 
 echo "Loading backup data..."
@@ -29,13 +29,13 @@ cp -rf $RESTORE_SRC_PATH/repo-avatars/* $RESTORE_TARGET_PATH/repo-avatars/
 cp -rf $RESTORE_SRC_PATH/tmp/* $RESTORE_TARGET_PATH/tmp/
 cp $RESTORE_SRC_PATH/gitea.db $RESTORE_TARGET_PATH/gitea.db
 
-echo "Starting forgejo container"
+echo "Restarting Forgejo container..."
 docker start "$CONTAINER_NAME"
 
-echo "Cleaning up temp files"
+echo "Cleaning up temp files..."
 rm -f "$RESTORE_SRC_PATH/forgejo-dump-*.zip"
 rm -f "$RESTORE_SRC_PATH/*.sql"
 rm -f "$RESTORE_SRC_PATH/app.ini"
 rm -rf "$RESTORE_SRC_PATH/data/*"
 
-echo "Restore complete"
+echo "Restore completed :)"

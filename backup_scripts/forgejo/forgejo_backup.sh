@@ -16,13 +16,13 @@ docker exec --user 1000:1000 -w /data/gitea/tmp "$CONTAINER_NAME" forgejo dump -
 echo "Stopping Forgejo container..."
 docker stop "$CONTAINER_NAME"
 
-echo "Copying SQLite database..."
+echo "Backing up Forgejo data..."
 cp "$BACKUP_SRC_DIR/$FILE_NAME" "$BACKUP_TARGET_DIR/"
 
 echo "Restarting Forgejo container..."
 docker start "$CONTAINER_NAME"
 
-echo "Cleaning up temp files"
+echo "Cleaning up temporary files"
 rm -f "$BACKUP_SRC_DIR/$FILE_NAME"
 
 echo "Forgejo backup complete. Files saved to $BACKUP_TARGET_DIR/$FILE_NAME"
