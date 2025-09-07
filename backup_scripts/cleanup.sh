@@ -1,11 +1,15 @@
 #!/bin/bash
 set -euo pipefail
 
-if [ ! -f ".env.cleanup" ]; then
-    echo ".env.cleanup not found!"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR" || exit 1
+
+ENV_FILE="$SCRIPT_DIR/.env.cleanup"
+if [ ! -f "$ENV_FILE" ]; then
+    echo "$ENV_FILE not found!"
     exit 1
 fi
-source .env.cleanup
+source "$ENV_FILE"
 
 RETENTION_DAYS=${RETENTION_DAYS:-14}
 
