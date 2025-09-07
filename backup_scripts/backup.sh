@@ -2,25 +2,20 @@
 set -euo pipefail
 
 if [ $# -lt 1 ]; then
-    echo "Usage: $0 <app_number>"
-    echo "[1] Mealie  [2] Forgejo"
+    echo "Usage: $0 <app_name>"
+    echo "mealie, forgejo, portainer or any with an compatible .env.<app_name> file"
     exit 1
 fi
 
-input="$1"
-case $input in
-    1) app_name="mealie" ;;
-    2) app_name="forgejo" ;;
-    *) echo "Invalid number"; exit 1 ;;
-esac
-
-FILE_NAME="${app_name}-dump-$(date +%Y-%m-%d).zip"
+app_name = $1
 
 if [ ! -f ".env.$app_name" ]; then
     echo ".env.$app_name not found!"
     exit 1
 fi
 source .env.$app_name
+
+FILE_NAME="${app_name}-dump-$(date +%Y-%m-%d).zip"
 
 echo "Stopping $app_name container..."
 docker stop "$CONTAINER_NAME"
