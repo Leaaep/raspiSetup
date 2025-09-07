@@ -7,7 +7,7 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
-app_name = $1
+app_name=$1
 
 if [ ! -f ".env.$app_name" ]; then
     echo ".env.$app_name not found!"
