@@ -5,6 +5,7 @@ The setup for my docker apps running on a Raspberry Pi.
 * Forgejo
 * Mealie
 * Portainer
+* Filebrowser
 
 # Reverse proxy
 
@@ -113,4 +114,4 @@ sudo systemctl reload caddy
 [source](https://caddyserver.com/docs/running)
 
 ## Backup
-I wrote multiple backup scripts for different containers in my setup. To use them you just need to rename: `.env.something->` `.env`
+For backing up borg backup is used. More info [here](https://borgbackup.readthedocs.io/en/stable/quickstart.html).
