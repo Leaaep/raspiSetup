@@ -11,7 +11,7 @@ fi
 
 app_name=$1
 
-ENV_FILE="$SCRIPT_DIR/.borg.env"
+ENV_FILE="$SCRIPT_DIR/.env.borg"
 if [ ! -f "$ENV_FILE" ]; then
     echo "$ENV_FILE not found!"
     exit 1
