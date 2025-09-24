@@ -18,16 +18,17 @@ if [ ! -f "$ENV_FILE" ]; then
 fi
 source "$ENV_FILE"
 
+# export passphrase so borg will not ask for it
 export BORG_PASSPHRASE=${BORG_PASSPHRASE}
 
-# generate backup name
-BACKUP_NAME=$(borg list --last 1 --short ${BORG_REPO})
+# get latest backup name for app
+BACKUP_NAME=$(borg list --last 1 --short "${BORG_REPO}/${app_name}")
 
-# restore
+# cd into the apps data folder
 cd "${APPS_FOLDER}/${app_name}"
 
 # delete old data
 rm -rf "${app_name}_data"
 
-# extract new data
-borg extract ${BORG_REPO}::${BACKUP_NAME}
+# restore backup data
+borg extract "${BORG_REPO}/${app_name}"::${BACKUP_NAME}

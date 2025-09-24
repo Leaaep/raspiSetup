@@ -22,22 +22,18 @@ source "$ENV_FILE"
 export BORG_PASSPHRASE=${BORG_PASSPHRASE}
 
 # initialize repo if not done already
-{
-  borg init --encryption repokey ${BORG_REPO}
-  echo "New Borg repo initalized"
-} || {
-  echo "Borg repo already exists"
-}
+borg init --encryption repokey "${BORG_REPO}/${app_name}"
 
 # cleanup old backups
-borg prune -v --list ${BORG_REPO} \
+borg prune -v --list "${BORG_REPO}/${app_name}" \
     --keep-daily=7 \
     --keep-weekly=4 \
     --keep-monthly=6
 
+# cd into the apps data folder
 cd "${APPS_FOLDER}/${app_name}" || exit 1
 
 # backup data and create a backup in format app_name-dump-YYYY-MM-DD
-borg create --stats ${BORG_REPO}::${app_name}-dump-$(date +%Y-%m-%d) "${app_name}_data"
+borg create --stats "${BORG_REPO}/${app_name}"::${app_name}-dump-$(date +%Y-%m-%d) "${app_name}_data"
 
 
