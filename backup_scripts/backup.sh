@@ -22,8 +22,11 @@ source "$ENV_FILE"
 export BORG_PASSPHRASE=${BORG_PASSPHRASE}
 
 # initialize repo if not done already
-borg init --encryption repokey "${BORG_REPO}/${app_name}"
-
+{
+    borg init --encryption repokey "${BORG_REPO}/${app_name}"
+} || {
+    echo "Borg already exists, no init needed!"
+}
 # cleanup old backups
 borg prune -v --list "${BORG_REPO}/${app_name}" \
     --keep-daily=7 \
